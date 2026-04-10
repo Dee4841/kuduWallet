@@ -8,8 +8,8 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  backendPath: 'backend/KuduWallet.API'
-  frontendPath: 'frontend/kuduwalletclient'
+  backendPath: 'KuduWallet.API'
+  frontendPath: 'KuduWalletClient'
 
 stages:
 
