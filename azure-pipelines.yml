@@ -1,48 +1,78 @@
 trigger:
-- main
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  buildConfiguration: 'Release'
+  backendPath: 'backend/KuduWallet.API'
+  frontendPath: 'frontend/kuduwalletclient'
+
 stages:
 
-# -------------------------
-# BACKEND (.NET)
-# -------------------------
-- stage: Build_Backend
-  displayName: Build Backend
+# ─────────────────────────────────────────
+# STAGE 1: BUILD & TEST BACKEND
+# ─────────────────────────────────────────
+- stage: Backend
+  displayName: 'Build & Test Backend'
   jobs:
-  - job: Backend
+  - job: BuildBackend
+    displayName: 'Build ASP.NET Core API'
     steps:
+
     - task: UseDotNet@2
+      displayName: 'Use .NET 8'
       inputs:
         packageType: 'sdk'
         version: '8.x'
 
     - script: dotnet restore
-      workingDirectory: KuduWallet.API
-      displayName: Restore Backend
+      displayName: 'Restore dependencies'
+      workingDirectory: '$(backendPath)'
 
-    - script: dotnet build --no-restore
-      workingDirectory: KuduWallet.API
-      displayName: Build Backend
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'Build backend'
+      workingDirectory: '$(backendPath)'
 
-# -------------------------
-# FRONTEND (React)
-# -------------------------
-- stage: Build_Frontend
-  displayName: Build Frontend
-  jobs:
-  - job: Frontend
-    steps:
-    - task: NodeTool@0
+    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/backend
+      displayName: 'Publish backend'
+      workingDirectory: '$(backendPath)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Upload backend artifact'
       inputs:
-        versionSpec: '18.x'
+        pathToPublish: '$(Build.ArtifactStagingDirectory)/backend'
+        artifactName: 'backend'
+
+# ─────────────────────────────────────────
+# STAGE 2: BUILD & TEST FRONTEND
+# ─────────────────────────────────────────
+- stage: Frontend
+  displayName: 'Build & Test Frontend'
+  dependsOn: Backend
+  jobs:
+  - job: BuildFrontend
+    displayName: 'Build React App'
+    steps:
+
+    - task: NodeTool@0
+      displayName: 'Use Node.js 20'
+      inputs:
+        versionSpec: '20.x'
 
     - script: npm install
-      workingDirectory: KuduWalletClient
-      displayName: Install Dependencies
+      displayName: 'Install dependencies'
+      workingDirectory: '$(frontendPath)'
 
     - script: npm run build
-      workingDirectory: KuduWalletClient
-      displayName: Build React App
+      displayName: 'Build frontend'
+      workingDirectory: '$(frontendPath)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Upload frontend artifact'
+      inputs:
+        pathToPublish: '$(frontendPath)/dist'
+        artifactName: 'frontend'
