@@ -1,0 +1,6 @@
+@KuduWallet.API_HostAddress = http://localhost:5070
+
+GET {{KuduWallet.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

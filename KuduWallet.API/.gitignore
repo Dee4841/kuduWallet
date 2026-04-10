@@ -1,0 +1,18 @@
+# User Secrets
+appsettings.Development.json
+
+# Build outputs
+**/bin/
+**/obj/
+
+# Environment files
+
+.env
+.env.local
+
+# Node
+
+node_modules/
+
+# VS Code
+.vscode/
