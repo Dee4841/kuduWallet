@@ -2,11 +2,11 @@ name: Full_Stack CI
 
 on:
   push: 
-    branches: ["main"]
-  pull_requests:
-    branches: ["main"]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-  jobs:
+jobs:
 
   backend:
     name: Build backend
@@ -16,17 +16,17 @@ on:
       run:
         working-directory: KuduWallet.API
 
-        steps:
-          - name: Checkout code
-            uses: actions/Checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/Checkout@v3
 
-          - name : Setup .NET
-            uses: actions/setup-dotnet@v3
-            with: 
-              dotnet-version: 8.0.x
+      - name : Setup .NET
+        uses: actions/setup-dotnet@v3
+        with: 
+          dotnet-version: 8.0.x
 
-          - name: Restore
-            run: dotnet restore
+      - name: Restore
+        run: dotnet restore
 
   fontend:
     name: Build Frontend
@@ -36,17 +36,17 @@ on:
       run:
         working-directory: KuduWalletClient
 
-      steps:
-        - name: Checkout code
-          uses: actions/Checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/Checkout@v3
 
-        - name: Setup Node
-          uses: actions/setup-node@v3
-          with:
-            node-version:18
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version:18
 
-        - name: Install dependencies
-          run: npm Install
+      - name: Install dependencies
+        run: npm Install
 
-        - name: Build App
-          run: npm run build 
+      - name: Build App
+        run: npm run build 
