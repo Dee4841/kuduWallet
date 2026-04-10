@@ -1,0 +1,48 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+
+# -------------------------
+# BACKEND (.NET)
+# -------------------------
+- stage: Build_Backend
+  displayName: Build Backend
+  jobs:
+  - job: Backend
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.x'
+
+    - script: dotnet restore
+      workingDirectory: KuduWallet.API
+      displayName: Restore Backend
+
+    - script: dotnet build --no-restore
+      workingDirectory: KuduWallet.API
+      displayName: Build Backend
+
+# -------------------------
+# FRONTEND (React)
+# -------------------------
+- stage: Build_Frontend
+  displayName: Build Frontend
+  jobs:
+  - job: Frontend
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.x'
+
+    - script: npm install
+      workingDirectory: KuduWalletClient
+      displayName: Install Dependencies
+
+    - script: npm run build
+      workingDirectory: KuduWalletClient
+      displayName: Build React App
