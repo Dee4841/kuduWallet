@@ -4,8 +4,12 @@ namespace KuduWallet.Data
     {
         public int Id {get;set;}
         public  string Name {get;set;}
-
+        public  string Email {get;set;}
+        public  string GoogleID {get;set;}
         public string Role {get;set;}
+        public  DateTime CreatedAt {get;set;} = DateTime.UtcNow;
+
+        public ICollection<RefreshToken> RefreshTokens {get;set;}
     }
 }
 

@@ -1,15 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Users from "./controllers/userController";
-
+import Home from "./controllers/home";
+import LandPage from "./controllers/landingPage";
 import './App.css';
+import AuthCallback from "./auth/authcallback";
 
 function App() {
   return (
     <Router>
           <section>
-            <h2>Now printing names</h2>
+       
         <Routes>
-            <Route path="/" element={<Users />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/landingPage" element={<LandPage />} />
+            <Route path="/Users" element={<Users />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
         </Routes>
  
     </section>

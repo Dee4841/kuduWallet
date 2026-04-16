@@ -20,6 +20,7 @@ namespace KuduWallet.Data
         }
 
         public DbSet<Users> users {get;set;}
+        public DbSet<RefreshToken> RefreshTokens {get;set;}
     }
 
   

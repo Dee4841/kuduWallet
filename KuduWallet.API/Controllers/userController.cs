@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using KuduWallet.Data;
 
 
-
 namespace KuduWallet.Controllers
 {
     [ApiController]
