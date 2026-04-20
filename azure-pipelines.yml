@@ -22,7 +22,7 @@ stages:
       displayName: Setup .NET
       inputs:
         packageType: 'sdk'
-        version: '8.0.x'
+        version: '10.x'
 
     - script: dotnet restore
       displayName: Restore
