@@ -1,65 +1,63 @@
+trigger:
+  - main
 
-name: Fullstack CI
+pool:
+  name: KuduWallet-pool   # your self-hosted Windows agent
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+stages:
 
-jobs:
-
-  # -------------------------
-  # BACKEND (.NET)
-  # -------------------------
-  backend:
-    name: Build Backend
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: KuduWallet.API
-
+# -------------------------
+# BACKEND (.NET)
+# -------------------------
+- stage: Backend
+  displayName: Build Backend
+  jobs:
+  - job: BackendJob
+    displayName: Backend Job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 8.0.x
+    - checkout: self
 
-      - name: Restore
-        run: dotnet restore
+    - task: UseDotNet@2
+      displayName: Setup .NET
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
 
-      - name: Build
-        run: dotnet build --no-restore
+    - script: dotnet restore
+      displayName: Restore
+      workingDirectory: KuduWallet.API
 
-      - name: Test
-        run: dotnet test --no-build || true
+    - script: dotnet build --no-restore
+      displayName: Build
+      workingDirectory: KuduWallet.API
 
-  # -------------------------
-  # FRONTEND (React)
-  # -------------------------
-  frontend:
-    name: Build Frontend
-    runs-on: ubuntu-latest
+    - script: dotnet test --no-build
+      displayName: Test
+      workingDirectory: KuduWallet.API
 
-    defaults:
-      run:
-        working-directory: KuduWalletClient
 
+# -------------------------
+# FRONTEND (React)
+# -------------------------
+- stage: Frontend
+  displayName: Build Frontend
+  jobs:
+  - job: FrontendJob
+    displayName: Frontend Job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+    - checkout: self
 
-      - name: Install dependencies
-        run: npm install
+    - task: NodeTool@0
+      displayName: Setup Node
+      inputs:
+        versionSpec: '18.x'
 
-      - name: Build app
-        run: npm run build
+    - script: npm install
+      displayName: Install dependencies
+      workingDirectory: KuduWalletClient
+
+    - script: npm run build
+      displayName: Build app
+      workingDirectory: KuduWalletClient
