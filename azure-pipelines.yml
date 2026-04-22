@@ -52,7 +52,7 @@ stages:
     - task: NodeTool@1
       displayName: Setup Node
       inputs:
-        versionSpec: '18.x'
+        version: '18.x'
 
     - script: npm install
       displayName: Install dependencies
