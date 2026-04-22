@@ -1,0 +1,328 @@
+/* ─── HOME PAGE ──────────────────────────────────────────────────── */
+ 
+.home-root {
+  min-height: 100vh;
+  background: var(--kudu-black);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+ 
+.home-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.home-bg-circle--1 {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,59,92,0.18) 0%, transparent 70%);
+}
+
+.home-bg-circle--2 {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  left: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,184,28,0.12) 0%, transparent 70%);
+}
+ 
+/* ─── TOP NAVBAR ───────────────────────────────────────── */
+
+.home-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 32px;
+
+  background: rgba(11, 22, 32, 0.6);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid var(--kudu-border);
+}
+
+/* logo */
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-logo-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--kudu-text);
+}
+
+/* nav links */
+.home-nav {
+  display: flex;
+  gap: 16px;
+}
+
+.home-nav-link {
+  font-size: 13px;
+  color: var(--kudu-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 0.2s;
+}
+
+.home-nav-link:hover {
+  color: var(--kudu-text);
+}
+ 
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-logo-text {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--kudu-text);
+  letter-spacing: -0.01em;
+}
+ 
+.home-domain-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--kudu-muted);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--kudu-border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+ 
+/* Center content */
+.home-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* 👇 KEY FIX */
+  justify-content: flex-start;
+
+  /* pushes card upward */
+  padding: 80px 20px 60px;
+
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.home-main--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
+.home-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--kudu-surface);
+  border: 1px solid var(--kudu-border);
+  border-radius: 20px;
+  padding: 40px 36px;
+  margin-bottom: 24px;
+
+  /* 👇 NEW */
+  transform: translateY(-20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+ 
+.home-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--kudu-green);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.home-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kudu-green);
+  box-shadow: 0 0 8px var(--kudu-green);
+}
+ 
+.home-headline {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.15;
+  color: var(--kudu-text);
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+.home-headline em {
+  font-style: italic;
+  color: var(--kudu-green);
+}
+ 
+.home-subtext {
+  font-size: 14px;
+  color: var(--kudu-muted);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+ 
+.home-divider {
+  height: 1px;
+  background: var(--kudu-border);
+  margin-bottom: 28px;
+}
+ 
+.home-google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--kudu-text);
+  color: #1a1a1a;
+  border: none;
+  border-radius: var(--kudu-radius-sm);
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  transition: background 0.18s, transform 0.12s;
+  margin-bottom: 14px;
+}
+.home-google-btn:hover {
+  background: #ffffff;
+}
+.home-google-btn:active {
+  transform: scale(0.98);
+}
+ 
+.home-domain-note {
+  font-size: 12px;
+  color: var(--kudu-faint);
+  text-align: center;
+  line-height: 1.6;
+}
+.home-domain-note code {
+  font-family: 'SF Mono', 'Fira Mono', monospace;
+  font-size: 11px;
+  color: var(--kudu-muted);
+  background: rgba(255,255,255,0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+ 
+/* Trust strip */
+.home-trust {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--kudu-border);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+.trust-icon {
+  font-size: 13px;
+}
+.trust-label {
+  font-size: 12px;
+  color: var(--kudu-muted);
+}
+
+/* ─── FLOATING FEATURE PANELS ───────────────────────────── */
+
+.home-float {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 0;
+}
+
+/* Left side */
+.home-float--left {
+  left: 40px;
+}
+
+/* Right side */
+.home-float--right {
+  right: 40px;
+}
+
+/* Individual card */
+.home-feature-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  width: 320px;
+  padding: 20px 24px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--kudu-border);
+  border-radius: 14px;
+
+  backdrop-filter: blur(10px);
+
+  opacity: 0.85;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* subtle hover (optional but nice) */
+.home-feature-card:hover {
+  transform: translateY(-4px);
+  opacity: 1;
+}
+
+/* icon */
+.home-feature-icon {
+  font-size: 18px;
+}
+
+/* text */
+.home-feature-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--kudu-text);
+}
+
+.home-feature-text {
+  font-size: 11px;
+  color: var(--kudu-muted);
+  line-height: 1.4;
+}
+
+/* ─── RESPONSIVE (IMPORTANT) ───────────────────────────── */
+
+@media (max-width: 1100px) {
+  .home-float {
+    display: none;
+  }
+}

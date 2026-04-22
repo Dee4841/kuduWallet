@@ -9,9 +9,12 @@ function AuthCallback ()
         if (code) {
             axios.post("http://localhost:5070/api/auth/google", { code })
                 .then(res => {
-                    const { accessToken } = res.data;
+                    const { accessToken, userName, userEmail } = res.data;
+                    
                     localStorage.setItem("accessToken", accessToken);
-                   
+                    localStorage.setItem("userEmail", userEmail);
+                    localStorage.setItem("userName", userName);
+
                    window.location.href = "/landingPage";
                 })
                 .catch(err => console.error("Auth failed:", err));

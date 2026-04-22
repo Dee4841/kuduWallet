@@ -31,7 +31,6 @@ namespace KuduWallet.Controllers
         [HttpPost("google")]
         public async Task<IActionResult> GoogleAuth([FromBody] GoogleAuthRequest request)
         {
-            Console.WriteLine("Triggeted backend");
             var tokenResponse = await ExchangeCodeForTokens(request.code);
             //For testing pursposes
             if (tokenResponse==null)
@@ -85,7 +84,7 @@ namespace KuduWallet.Controllers
 
 
 
-            return Ok(new { accessToken });
+            return Ok(new { accessToken, userName =user.Name, userEmail= user.Email });
         }
 
         [HttpPost("logout")]

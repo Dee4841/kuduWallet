@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+:root {
+  --kudu-black: #0b1620;
+  --kudu-deep: #0f2230;
+  --kudu-surface: #132a3a;
+  --kudu-card: #173447;
+
+  --kudu-border: rgba(255, 255, 255, 0.08);
+  --kudu-border-strong: rgba(255, 255, 255, 0.14);
+
+  /* 🔵 Wits Blue */
+  --kudu-primary: #003B5C;
+
+  /* 🟡 Wits Gold */
+  --kudu-accent: #FFB81C;
+  --kudu-accent-dim: #cc9416;
+  --kudu-accent-bg: rgba(255, 184, 28, 0.1);
+
+  --kudu-text: #e8f0ed;
+  --kudu-muted: rgba(232, 240, 237, 0.5);
+  --kudu-faint: rgba(232, 240, 237, 0.25);
+
+  --kudu-radius: 14px;
+  --kudu-radius-sm: 8px;
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* FULL HEIGHT FIX */
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent white background when scrolling */
+html {
+  background: var(--kudu-black);
+}
+
+
+body {
+  background: #003B5C;
+  color: var(--kudu-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+a {
+  color: var(--kudu-green);
+  text-decoration: none;
+}
