@@ -49,7 +49,7 @@ stages:
 
     - checkout: self
 
-    - task: NodeTool@0
+    - task: NodeTool@1
       displayName: Setup Node
       inputs:
         versionSpec: '18.x'
