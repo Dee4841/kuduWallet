@@ -72,10 +72,9 @@ stages:
     steps:
 
     - script: |
-        curl -s -X POST "$(RENDER_DEPLOY_HOOK_URL)" \
-          -o response.txt \
-          -w "\nHTTP Status: %{http_code}\n"
-        cat response.txt
-      displayName: Trigger Render deploy
-      env:
-        RENDER_DEPLOY_HOOK_URL: $(RENDER_DEPLOY_HOOK_URL)
+    curl -s -X POST "$(RENDER_DEPLOY_HOOK_URL)" \
+      -o response.txt \
+      -w "\nHTTP Status: %{http_code}\n"
+    cat response.txt
+  displayName: Trigger Render deploy
+  shell: bash
