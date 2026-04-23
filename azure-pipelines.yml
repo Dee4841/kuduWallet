@@ -1,5 +1,13 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main
+      - develop
+
+pr: 
+  branches:
+    include:
+      - main
 
 pool:
   name: KuduWallet-pool   # your self-hosted Windows agent
@@ -36,6 +44,25 @@ stages:
       displayName: Test
       workingDirectory: KuduWallet.API
 
+# -------------------------
+# BACKEND — Deploy to Render
+# Only runs on main, after build passes
+# -------------------------
+- stage: Backend_Deploy
+  displayName: Deploy Backend to Render
+  dependsOn: Backend_Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: DeployJob
+    displayName: Trigger Render Deploy Hook
+    steps:
+
+    - script: |
+        curl -s -X POST "$(RENDER_DEPLOY_HOOK_URL)" \
+          -o response.txt \
+          -w "\nHTTP Status: %{http_code}\n"
+        cat response.txt
+      displayName: Trigger Render deploy
 
 # -------------------------
 # FRONTEND (React)
