@@ -15,30 +15,24 @@ stages:
   - job: BackendJob
     displayName: Backend Job
     steps:
-
     - checkout: self
-
     - task: UseDotNet@2
       displayName: Setup .NET
       inputs:
         packageType: 'sdk'
         version: '10.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
-
     - script: dotnet restore
       displayName: Restore
       workingDirectory: KuduWallet.API
-
     - script: dotnet build --no-restore
       displayName: Build
       workingDirectory: KuduWallet.API
-
     - script: |
         set PATH=$(Agent.ToolsDirectory)\dotnet;%PATH%
         dotnet test --no-build
       displayName: Test
       workingDirectory: KuduWallet.API
-
 
 # -------------------------
 # FRONTEND (React)
@@ -50,27 +44,22 @@ stages:
   - job: FrontendJob
     displayName: Frontend Job
     steps:
-
     - checkout: self
-
     - task: NodeTool@1
       displayName: Setup Node
       inputs:
         version: '18.x'
-
     - script: npm install
       displayName: Install dependencies
       workingDirectory: KuduWalletClient
-
     - script: npm run build
       displayName: Build app
       workingDirectory: KuduWalletClient
 
 # -------------------------
 # DEPLOY — Trigger Render
-# Only runs after both stages pass, on main
 # -------------------------
-- stage: Deploy backend
+- stage: Deploy_Backend
   displayName: Deploy to Render
   dependsOn: Frontend
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -78,7 +67,6 @@ stages:
   - job: DeployJob
     displayName: Trigger Render Deploy Hook
     steps:
-
     - script: |
         curl -X POST "$(RENDER_DEPLOY_HOOK_URL)" -o response.txt
         type response.txt
@@ -86,19 +74,16 @@ stages:
 
 # -------------------------
 # DEPLOY — Trigger Vercel
-# Only runs after both stages pass, on main
 # -------------------------
-
-  - stage: Deploy frontend
-    displayName: Deploy to Vercel
-    dependsOn: Deploy backend
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    jobs:
-    - job: DeployJob
-      displayName: Trigger Vercel Deploy Hook
-      steps:
-      
+- stage: Deploy_Frontend
+  displayName: Deploy to Vercel
+  dependsOn: Deploy_Backend
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: DeployJob
+    displayName: Trigger Vercel Deploy Hook
+    steps:
     - script: |
-        curl -s -X POST "$(VERCEL_DEPLOY_HOOK_URL)" -o response.txt 
+        curl -X POST "$(VERCEL_DEPLOY_HOOK_URL)" -o response.txt
         type response.txt
       displayName: Trigger Vercel deploy
