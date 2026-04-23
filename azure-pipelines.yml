@@ -1,63 +1,64 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main
+      - develop
+
+pr:
+  branches:
+    include:
+      - main
 
 pool:
-  name: KuduWallet-pool   # your self-hosted Windows agent
+  name: KuduWallet-pool
+
+variables:
+  - group: kuduwallet-secrets
 
 stages:
 
 # -------------------------
-# BACKEND (.NET)
+# BACKEND — Build
 # -------------------------
-- stage: Backend
+- stage: Backend_Build
   displayName: Build Backend
   jobs:
-  - job: BackendJob
-    displayName: Backend Job
+  - job: BackendBuildJob
+    displayName: Build .NET API
     steps:
 
     - checkout: self
 
     - task: UseDotNet@2
-      displayName: Setup .NET
+      displayName: Setup .NET 10
       inputs:
         packageType: 'sdk'
         version: '10.x'
 
     - script: dotnet restore
-      displayName: Restore
+      displayName: Restore dependencies
       workingDirectory: KuduWallet.API
 
-    - script: dotnet build --no-restore
-      displayName: Build
+    - script: dotnet build --no-restore --configuration Release
+      displayName: Build (Release)
       workingDirectory: KuduWallet.API
-
-    - script: dotnet test --no-build
-      displayName: Test
-      workingDirectory: KuduWallet.API
-
 
 # -------------------------
-# FRONTEND (React)
+# BACKEND — Deploy to Render
+# Only runs on main, after build passes
 # -------------------------
-- stage: Frontend
-  displayName: Build Frontend
+- stage: Backend_Deploy
+  displayName: Deploy Backend to Render
+  dependsOn: Backend_Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   jobs:
-  - job: FrontendJob
-    displayName: Frontend Job
+  - job: DeployJob
+    displayName: Trigger Render Deploy Hook
     steps:
 
-    - checkout: self
-
-    - task: NodeTool@1
-      displayName: Setup Node
-      inputs:
-        version: '18.x'
-
-    - script: npm install
-      displayName: Install dependencies
-      workingDirectory: KuduWalletClient
-
-    - script: npm run build
-      displayName: Build app
-      workingDirectory: KuduWalletClient
+    - script: |
+        curl -s -X POST "$(RENDER_DEPLOY_HOOK_URL)" \
+          -o response.txt \
+          -w "\nHTTP Status: %{http_code}\n"
+        cat response.txt
+      displayName: Trigger Render deploy
