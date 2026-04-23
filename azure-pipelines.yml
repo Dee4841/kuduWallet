@@ -72,7 +72,7 @@ stages:
     steps:
 
     - script: |
-        curl -s -X POST "$(RENDER_DEPLOY_HOOK_URL)" \
+        curl -s -X POST "$https://api.render.com/deploy/srv-d7l1rb0sfn5c73cs0b90?key=FhblSS1J2KM" \
           -o response.txt \
           -w "\nHTTP Status: %{http_code}\n"
         cat response.txt
