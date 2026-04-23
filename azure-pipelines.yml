@@ -1,55 +1,70 @@
 trigger:
-  branches:
-    include:
-      - main
-      - develop
-
-pr:
-  branches:
-    include:
-      - main
+  - main
 
 pool:
   name: KuduWallet-pool
 
-variables:
-  - group: kuduwallet-secrets
-
 stages:
 
 # -------------------------
-# BACKEND — Build
+# BACKEND (.NET)
 # -------------------------
-- stage: Backend_Build
+- stage: Backend
   displayName: Build Backend
   jobs:
-  - job: BackendBuildJob
-    displayName: Build .NET API
+  - job: BackendJob
+    displayName: Backend Job
     steps:
 
     - checkout: self
 
     - task: UseDotNet@2
-      displayName: Setup .NET 10
+      displayName: Setup .NET
       inputs:
         packageType: 'sdk'
         version: '10.x'
 
     - script: dotnet restore
-      displayName: Restore dependencies
+      displayName: Restore
       workingDirectory: KuduWallet.API
 
-    - script: dotnet build --no-restore --configuration Release
-      displayName: Build (Release)
+    - script: dotnet build --no-restore
+      displayName: Build
       workingDirectory: KuduWallet.API
 
 # -------------------------
-# BACKEND — Deploy to Render
-# Only runs on main, after build passes
+# FRONTEND (React)
 # -------------------------
-- stage: Backend_Deploy
-  displayName: Deploy Backend to Render
-  dependsOn: Backend_Build
+- stage: Frontend
+  displayName: Build Frontend
+  dependsOn: Backend
+  jobs:
+  - job: FrontendJob
+    displayName: Frontend Job
+    steps:
+
+    - checkout: self
+
+    - task: NodeTool@1
+      displayName: Setup Node
+      inputs:
+        version: '18.x'
+
+    - script: npm install
+      displayName: Install dependencies
+      workingDirectory: KuduWalletClient
+
+    - script: npm run build
+      displayName: Build app
+      workingDirectory: KuduWalletClient
+
+# -------------------------
+# DEPLOY — Trigger Render
+# Only runs after both stages pass, on main
+# -------------------------
+- stage: Deploy
+  displayName: Deploy to Render
+  dependsOn: Frontend
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   jobs:
   - job: DeployJob
@@ -62,3 +77,5 @@ stages:
           -w "\nHTTP Status: %{http_code}\n"
         cat response.txt
       displayName: Trigger Render deploy
+      env:
+        RENDER_DEPLOY_HOOK_URL: $(RENDER_DEPLOY_HOOK_URL)
