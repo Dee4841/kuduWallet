@@ -19,4 +19,8 @@ COPY --from=build /app/out .
 EXPOSE 10000
 ENV ASPNETCORE_URLS=http://+:10000
 
+<<<<<<< Updated upstream
 ENTRYPOINT ["dotnet", "KuduWallet.API.dll"]
+=======
+ENTRYPOINT ["dotnet", "KuduWallet.API.dll"]
+>>>>>>> Stashed changes

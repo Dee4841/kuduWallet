@@ -42,7 +42,18 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Program.cs
+
 var app = builder.Build();
+
+///Used to run migrations on every render start
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
+
 
 
 

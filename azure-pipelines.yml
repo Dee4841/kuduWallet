@@ -23,6 +23,7 @@ stages:
       inputs:
         packageType: 'sdk'
         version: '10.x'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - script: dotnet restore
       displayName: Restore
@@ -31,6 +32,13 @@ stages:
     - script: dotnet build --no-restore
       displayName: Build
       workingDirectory: KuduWallet.API
+
+    - script: |
+        set PATH=$(Agent.ToolsDirectory)\dotnet;%PATH%
+        dotnet test --no-build
+      displayName: Test
+      workingDirectory: KuduWallet.API
+
 
 # -------------------------
 # FRONTEND (React)
