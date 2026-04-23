@@ -70,7 +70,7 @@ stages:
 # DEPLOY — Trigger Render
 # Only runs after both stages pass, on main
 # -------------------------
-- stage: Deploy
+- stage: Deploy backend
   displayName: Deploy to Render
   dependsOn: Frontend
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -83,3 +83,22 @@ stages:
         curl -X POST "$(RENDER_DEPLOY_HOOK_URL)" -o response.txt
         type response.txt
       displayName: Trigger Render deploy
+
+# -------------------------
+# DEPLOY — Trigger Vercel
+# Only runs after both stages pass, on main
+# -------------------------
+
+  - stage: Deploy frontend
+    displayName: Deploy to Vercel
+    dependsOn: Deploy backend
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+    - job: DeployJob
+      displayName: Trigger Vercel Deploy Hook
+      steps:
+      
+    - script: |
+        curl -s -X POST "$(VERCEL_DEPLOY_HOOK_URL)" -o response.txt 
+        type response.txt
+      displayName: Trigger Vercel deploy
