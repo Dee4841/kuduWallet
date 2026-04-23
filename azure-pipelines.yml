@@ -63,28 +63,3 @@ stages:
           -w "\nHTTP Status: %{http_code}\n"
         cat response.txt
       displayName: Trigger Render deploy
-
-# -------------------------
-# FRONTEND (React)
-# -------------------------
-- stage: Frontend
-  displayName: Build Frontend
-  jobs:
-  - job: FrontendJob
-    displayName: Frontend Job
-    steps:
-
-    - checkout: self
-
-    - task: NodeTool@1
-      displayName: Setup Node
-      inputs:
-        version: '18.x'
-
-    - script: npm install
-      displayName: Install dependencies
-      workingDirectory: KuduWalletClient
-
-    - script: npm run build
-      displayName: Build app
-      workingDirectory: KuduWalletClient
