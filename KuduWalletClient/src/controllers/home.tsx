@@ -4,7 +4,7 @@ import '../stylesheets/homepage.css';
 import { Banknote, FileScan, Printer, Wallet } from 'lucide-react';
 
 const Google_Client_ID = import.meta.env.VITE_Google_Client_ID as string;
-const Redirect_URL = import.meta.env.VITE_REDIRECT_URL  as string;
+const Redirect_URL = import.meta.env.VITE_API_URL  as string;
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
