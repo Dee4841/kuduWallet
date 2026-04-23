@@ -1,21 +1,18 @@
-# render.yaml  (repo root)
+# render.yaml
 services:
   - type: web
     name: kuduwallet-api
-    runtime: dotnet
-    region: frankfurt  # closest to South Africa
+    runtime: docker
+    region: frankfurt
     branch: main
-    rootDir: kuduWallet/KuduWallet.API
-    buildCommand: dotnet publish KuduWallet.API.csproj -c Release -o out
-    startCommand: dotnet out/KuduWallet.API.dll
+    rootDir: KuduWallet.API
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /health
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
-      - key: ASPNETCORE_URLS
-        value: http://+:10000
       - key: ConnectionStrings__DefaultConnection
-        sync: false   # means you set this manually in Render dashboard (keeps secrets out of git)
+        sync: false
       - key: Jwt__Secret
         sync: false
       - key: Jwt__Issuer
