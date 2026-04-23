@@ -51,5 +51,7 @@ app.UseAuthentication();
   app.UseSwagger();
     app.UseSwaggerUI();
 app.MapControllers();
+// Used for render
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 app.Run();
 
