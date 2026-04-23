@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function AuthCallback ()
 {
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get("code");
 
         if (code) {
-            axios.post("http://localhost:5070/api/auth/google", { code })
+            axios.post(`${API_URL}/api/auth/google`, { code })
                 .then(res => {
                     const { accessToken, userName, userEmail } = res.data;
                     
