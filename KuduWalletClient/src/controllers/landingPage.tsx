@@ -4,6 +4,8 @@ import {  CircleArrowDown, History, ShieldCheck, TrendingDown } from 'lucide-rea
 import '../stylesheets/kuduwallet.css';
 import '../stylesheets/dashboard.css';
 
+const API_BASE_URL= import.meta.env.VITE_API_URL;
+
 interface Transaction {
   id: number;
   name: string;
@@ -33,7 +35,7 @@ export default function LandPage() {
 
   const handleLogOut = async () => {
     try {
-      await axios.post('http://localhost:5070/api/auth/logout', {}, { withCredentials: true });
+      await axios.post(`${API_BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
       localStorage.removeItem('accessToken');
       localStorage.removeItem("userName");
       localStorage.removeItem('userEmail');
