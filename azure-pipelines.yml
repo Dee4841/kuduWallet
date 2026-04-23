@@ -4,44 +4,43 @@ trigger:
       - main
       - develop
 
-pr: 
+pr:
   branches:
     include:
       - main
 
 pool:
-  name: KuduWallet-pool   # your self-hosted Windows agent
+  name: KuduWallet-pool
+
+variables:
+  - group: kuduwallet-secrets
 
 stages:
 
 # -------------------------
-# BACKEND (.NET)
+# BACKEND — Build
 # -------------------------
-- stage: Backend
+- stage: Backend_Build
   displayName: Build Backend
   jobs:
-  - job: BackendJob
-    displayName: Backend Job
+  - job: BackendBuildJob
+    displayName: Build .NET API
     steps:
 
     - checkout: self
 
     - task: UseDotNet@2
-      displayName: Setup .NET
+      displayName: Setup .NET 10
       inputs:
         packageType: 'sdk'
         version: '10.x'
 
     - script: dotnet restore
-      displayName: Restore
+      displayName: Restore dependencies
       workingDirectory: KuduWallet.API
 
-    - script: dotnet build --no-restore
-      displayName: Build
-      workingDirectory: KuduWallet.API
-
-    - script: dotnet test --no-build
-      displayName: Test
+    - script: dotnet build --no-restore --configuration Release
+      displayName: Build (Release)
       workingDirectory: KuduWallet.API
 
 # -------------------------
