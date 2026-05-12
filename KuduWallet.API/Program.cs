@@ -59,6 +59,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
+app.UseAuthorization();
   app.UseSwagger();
     app.UseSwaggerUI();
 app.MapControllers();

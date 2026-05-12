@@ -8,7 +8,7 @@ function AuthCallback ()
         const code = new URLSearchParams(window.location.search).get("code");
 
         if (code) {
-            axios.post(`${API_URL}/api/auth/google`, { code })
+            axios.post(`${API_URL}/api/auth/google`, { code }, {withCredentials:true})
                 .then(res => {
                     const { accessToken, userName, userEmail } = res.data;
                     
