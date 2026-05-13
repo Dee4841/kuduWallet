@@ -1,0 +1,716 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+/* ════════════════════════════════════════════════════════════════════
+   ROOT & LAYOUT
+   ════════════════════════════════════════════════════════════════════ */
+
+.root {
+  font-family: var(--font-body);
+  background: var(--kudu-black);
+  min-height: 100vh;
+  color: var(--kudu-text);
+}
+
+.topbar {
+  background: rgba(11, 22, 32, 0.82);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--kudu-border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--kudu-muted);
+  font-size: 13px;
+  font-family: var(--font-body);
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.backBtn:hover {
+  color: var(--kudu-text);
+}
+
+.pageTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--kudu-text);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  padding: 32px 24px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SECTION LABELS
+   ════════════════════════════════════════════════════════════════════ */
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--kudu-faint);
+  margin-bottom: 12px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CARD LIST
+   ════════════════════════════════════════════════════════════════════ */
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cardItem {
+  background: var(--kudu-surface);
+  border: 1px solid var(--kudu-border);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cardItem:hover {
+  border-color: var(--kudu-border-strong);
+  transform: translateY(-2px);
+  background: var(--kudu-card);
+}
+
+.cardItemSelected {
+  border: 1px solid var(--kudu-accent);
+  background: rgba(255, 184, 28, 0.08);
+  box-shadow: 0 0 0 1px rgba(255, 184, 28, 0.15);
+}
+
+.cardChip {
+  width: 44px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.chipVisa {
+  background: #1a1f71;
+  color: #fff;
+}
+
+.chipMc {
+  background: #eb001b;
+  color: #fff;
+}
+
+.chipAmex {
+  background: #2e77bc;
+  color: #fff;
+}
+
+.chipCard {
+  background: #374151;
+  color: #fff;
+}
+
+.cardInfo {
+  flex: 1;
+}
+
+.cardName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--kudu-text);
+  margin: 0;
+}
+
+.cardNumber {
+  font-size: 12px;
+  color: var(--kudu-muted);
+  font-family: 'DM Mono', monospace;
+  margin: 2px 0 0;
+}
+
+.cardCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--kudu-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.addCardBtn {
+  width: 100%;
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed var(--kudu-border-strong);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--kudu-muted);
+  font-size: 13px;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.addCardBtn:hover {
+  border-color: var(--kudu-accent);
+  color: var(--kudu-accent);
+  background: rgba(255,184,28,0.05);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ════════════════════════════════════════════════════════════════════ */
+
+.emptyState {
+  background: var(--kudu-surface);
+  border: 1px dashed var(--kudu-border-strong);
+  border-radius: 14px;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 28px;
+  color: var(--kudu-faint);
+  margin-bottom: 10px;
+}
+
+.emptyText {
+  font-size: 13px;
+  color: var(--kudu-muted);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   RIGHT PANEL
+   ════════════════════════════════════════════════════════════════════ */
+
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   AMOUNT CARD
+   ════════════════════════════════════════════════════════════════════ */
+
+.amountCard {
+  background: var(--kudu-surface);
+  border: 1px solid var(--kudu-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.amountLabel {
+  font-size: 12px;
+  color: var(--kudu-muted);
+  margin: 0 0 8px;
+}
+
+.amountInputWrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--kudu-border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  background: var(--kudu-card);
+  transition: border-color 0.2s ease;
+}
+
+.amountInputWrap:focus-within {
+  border-color: var(--kudu-accent);
+  box-shadow: 0 0 0 3px rgba(255,184,28,0.08);
+}
+
+.currencyTag {
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+  color: var(--kudu-muted);
+  border-right: 1px solid var(--kudu-border);
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+}
+
+.amountInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px;
+  font-size: 22px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--kudu-text);
+  font-family: 'DM Mono', monospace;
+  min-width: 0;
+}
+
+.amountInput:disabled {
+  color: var(--kudu-faint);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   QUICK AMOUNTS
+   ════════════════════════════════════════════════════════════════════ */
+
+.quickAmounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.quickAmt {
+  background: var(--kudu-card);
+  border: 1px solid var(--kudu-border);
+  border-radius: 10px;
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--kudu-muted);
+  transition: all 0.2s ease;
+}
+
+.quickAmt:hover:not(:disabled) {
+  border-color: var(--kudu-accent);
+  color: var(--kudu-accent);
+  background: rgba(255,184,28,0.06);
+}
+
+.quickAmtActive {
+  background: rgba(255,184,28,0.1) !important;
+  border-color: var(--kudu-accent) !important;
+  color: var(--kudu-accent) !important;
+}
+
+.quickAmt:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   TOPUP BUTTON
+   ════════════════════════════════════════════════════════════════════ */
+
+.topupBtn {
+  width: 100%;
+  background: var(--kudu-accent);
+  color: #111;
+  border: none;
+  border-radius: 12px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.topupBtn:hover:not(:disabled) {
+  background: #ffc94d;
+  transform: translateY(-1px);
+}
+
+.topupBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.topupBtnSuccess {
+  background: #0f6e56 !important;
+  color: white;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--kudu-faint);
+  text-align: center;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SUMMARY CARD
+   ════════════════════════════════════════════════════════════════════ */
+
+.summaryCard {
+  background: var(--kudu-card);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--kudu-border);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.summaryRow:last-child {
+  margin-bottom: 0;
+}
+
+.summaryKey {
+  color: var(--kudu-muted);
+}
+
+.summaryKeyBold {
+  font-weight: 500;
+  color: var(--kudu-text);
+}
+
+.summaryVal {
+  font-weight: 500;
+  color: var(--kudu-text);
+  font-family: 'DM Mono', monospace;
+}
+
+.summaryValGreen {
+  color: #37c18e;
+}
+
+.summaryDivider {
+  border-top: 1px solid var(--kudu-border);
+  margin: 12px 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SPIN ANIMATION
+   ════════════════════════════════════════════════════════════════════ */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   MODAL
+   ════════════════════════════════════════════════════════════════════ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--kudu-surface);
+  border-radius: 18px;
+  padding: 28px;
+  width: 380px;
+  max-width: calc(100vw - 40px);
+  border: 1px solid var(--kudu-border);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--kudu-text);
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--kudu-muted);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  transition: color 0.2s ease;
+}
+
+.modalClose:hover {
+  color: var(--kudu-text);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CARD PREVIEW
+   ════════════════════════════════════════════════════════════════════ */
+
+.cardPreview {
+  background:
+    linear-gradient(
+      135deg,
+      var(--kudu-primary),
+      #002944
+    );
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardPreview::before {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  top: -30px;
+  right: -20px;
+}
+
+.cardPreview::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  bottom: -20px;
+  left: 40px;
+}
+
+.previewBrand {
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 0 0 16px;
+  letter-spacing: 0.06em;
+}
+
+.previewNum {
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  margin: 0 0 16px;
+}
+
+.previewBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.previewName {
+  font-size: 12px;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.previewExp {
+  font-size: 12px;
+  opacity: 0.7;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FORM FIELDS
+   ════════════════════════════════════════════════════════════════════ */
+
+.field {
+  margin-bottom: 16px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  color: var(--kudu-muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  border: 1px solid var(--kudu-border);
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 14px;
+  background: var(--kudu-card);
+  color: var(--kudu-text);
+  font-family: 'DM Mono', monospace;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--kudu-accent);
+  box-shadow: 0 0 0 3px rgba(255,184,28,0.08);
+}
+
+.inputError {
+  border-color: #e24b4a !important;
+}
+
+.errorMsg {
+  font-size: 11px;
+  color: #ff7d7d;
+  margin: 4px 0 0;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   MODAL ACTIONS
+   ════════════════════════════════════════════════════════════════════ */
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btnCancel {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--kudu-border);
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--kudu-muted);
+  transition: all 0.2s ease;
+}
+
+.btnCancel:hover {
+  background: rgba(255,255,255,0.03);
+  color: var(--kudu-text);
+}
+
+.btnSave {
+  flex: 1;
+  background: var(--kudu-accent);
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+
+.btnSave:hover {
+  background: #ffc94d;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   TOAST
+   ════════════════════════════════════════════════════════════════════ */
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideUp 0.3s ease;
+  z-index: 200;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.toastSuccess {
+  background: #0f6e56;
+}
+
+.toastError {
+  background: #a32d2d;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

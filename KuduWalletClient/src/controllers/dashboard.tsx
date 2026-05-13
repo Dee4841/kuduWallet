@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {  CircleArrowDown, History, ShieldCheck, TrendingDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import '../stylesheets/kuduwallet.css';
 import '../stylesheets/dashboard.css';
 
@@ -44,7 +45,7 @@ export default function LandPage() {
       console.error('Failed to logOut');
     }
   };
-
+  const navigate = useNavigate();
   const totalSpent = transactions.filter(t => t.type === 'debit').reduce((a, t) => a + t.amount, 0);
   const totalTopUp = transactions.filter(t => t.type === 'credit').reduce((a, t) => a + t.amount, 0);
   const txCount = transactions.length;
@@ -102,7 +103,8 @@ export default function LandPage() {
               </p>
 
               <section className="dash-hero-actions">
-                <button className="dash-action-btn dash-action-btn--primary">＋ Top up</button>
+                <button className="dash-action-btn dash-action-btn--primary"
+                onClick={() => navigate("/topUpPage")}  >＋ Top up</button>
                 <button className="dash-action-btn dash-action-btn--ghost">⇄ Transfer</button>
                 <button className="dash-action-btn dash-action-btn--ghost">↗ Pay</button>
               </section>
